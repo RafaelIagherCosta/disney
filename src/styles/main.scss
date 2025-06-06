@@ -1,17 +1,20 @@
-@use 'hero';
 @use 'variaveis';
+@use 'hero';
+@use 'shows';
 
-@font-face{
-    font-family: Avenir;
-    src: url(../../assets/fonts/Avenir-Regular.woff2);
-    font-weight: 400;
+@font-face {
+  font-family: Avenir;
+  src: url(../../assets/fonts/Avenir-Regular.woff2);
+  font-weight: 400;
 }
 
-@font-face{
-    font-family: Avenir;
-    src: url(../../assets/fonts/Avenir-Bold.woff2);
-    font-weight: 700;
+@font-face {
+  font-family: Avenir;
+  src: url(../../assets/fonts/Avenir-Bold.woff2);
+  font-weight: 700;
 }
+
+@debug variaveis.$corTextoSecundaria;
 
 * {
   margin: 0;
