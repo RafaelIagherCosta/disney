@@ -1,15 +1,42 @@
 const gulp = require('gulp');
-const dartSass = require('sass'); // Importa o compilador Sass (Dart Sass)
-const gulpSass = require('gulp-sass')(dartSass); // Conecta o gulp-sass ao compilador
+const dartSass = require('sass');
+const gulpSass = require('gulp-sass')(dartSass);
+const imagemin = require('gulp-imagemin');
 
+// Caminhos
+const paths = {
+  styles: {
+    src: './src/styles/**/*.scss',
+    dest: './dist/css'
+  },
+  images: {
+    src: './src/images/**/*.{jpg,jpeg,png,svg,gif}',
+    dest: './dist/images'
+  }
+};
+
+// Compilar SCSS e minificar
 function styles() {
-  return gulp.src('./src/styles/*.scss') // ou apenas * se não for SCSS
-    .pipe(gulpSass({ outputStyle: 'compressed' }).on('error', gulpSass.logError)) // adiciona tratamento de erro
-    .pipe(gulp.dest('./dist/css'));
+  return gulp.src(paths.styles.src)
+    .pipe(gulpSass({ outputStyle: 'compressed' }).on('error', gulpSass.logError))
+    .pipe(gulp.dest(paths.styles.dest));
 }
 
-exports.default = styles;
-
-exports.watch = function(){
-    gulp.watch('./src/styles/*.scss', gulp.parallel(styles))
+// Minificar imagens
+function images() {
+  return gulp.src(paths.images.src)
+    .pipe(imagemin())
+    .pipe(gulp.dest(paths.images.dest));
 }
+
+// Observar alterações
+function watch() {
+  gulp.watch(paths.styles.src, styles);
+  gulp.watch(paths.images.src, images);
+}
+
+// Exportar tarefas
+exports.styles = styles;
+exports.images = images;
+exports.watch = watch;
+exports.default = gulp.parallel(styles, images);
