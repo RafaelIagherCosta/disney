@@ -39,4 +39,7 @@ function watch() {
 exports.styles = styles;
 exports.images = images;
 exports.watch = watch;
-exports.default = gulp.parallel(styles, images);
+exports.default = gulp.series(
+  gulp.parallel(styles, images),
+  watch
+);
