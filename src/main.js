@@ -12,8 +12,18 @@ document.addEventListener('DOMContentLoaded', function(){
             botao.target.classList.add('shows__tabs__button--is-active')
         })
      }
-})
 
+     for(let i = 0; i< questions.length; i++){
+        questions[i].addEventListener('click', abreOuFechaResposta)
+     }
+    
+    })
+
+
+function abreOuFechaResposta(elementot){
+    const classe = 'faq__questions__item--is-open';
+    console.log(elemento)
+}
 function removeBotaoAtivo(){
     const buttons = document.querySelectorAll('[data-tab-button]');
 
