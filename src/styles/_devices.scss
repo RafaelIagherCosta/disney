@@ -9,11 +9,13 @@
     &__list{
         display: flex;
         justify-content: space-around;
+        list-style: none;
 
 
         &__item{
             text-align: center;
             margin-right: 24px;
+            list-style: none;
 
             h4{
                 margin-top: 20px;
