@@ -1,4 +1,4 @@
-@use'variaveis';
+@use 'variaveis';
 
 .footer{
 
@@ -18,7 +18,6 @@
 
         &__links{
             margin-bottom: 16px;
-            display: flex;
             align-items: center;
             flex-wrap: wrap;
             justify-content: center;
