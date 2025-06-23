@@ -1,14 +1,11 @@
-const gulp = require('gulp');
-const dartSass = require('sass');
-const gulpSass = require('gulp-sass')(dartSass);
-const imagemin = require('gulp-imagemin');
-const uglify = require('gulp-uglify');
+// gulpfile.mjs
+import gulp from 'gulp';
+import dartSass from 'sass';
+import gulpSass from 'gulp-sass';
+import imagemin from 'gulp-imagemin';
+import uglify from 'gulp-uglify';
 
-function scripts(){
-  return gulp.src('./src/scripts/*.s')
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist/js'))
-    }
+const sass = gulpSass(dartSass);
 
 // Caminhos
 const paths = {
@@ -19,35 +16,34 @@ const paths = {
   images: {
     src: './src/images/**/*.{jpg,jpeg,png,svg,gif}',
     dest: './dist/images'
+  },
+  scripts: {
+    src: './src/scripts/*.js',
+    dest: './dist/js'
   }
 };
 
-// Compilar SCSS e minificar
-function styles() {
+// Compilar SCSS
+export function styles() {
   return gulp.src(paths.styles.src)
-    .pipe(gulpSass({ outputStyle: 'compressed' }).on('error', gulpSass.logError))
+    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
     .pipe(gulp.dest(paths.styles.dest));
 }
 
 // Minificar imagens
-function images() {
+export function images() {
   return gulp.src(paths.images.src)
     .pipe(imagemin())
     .pipe(gulp.dest(paths.images.dest));
 }
 
-// Observar alterações
-function watch() {
-  gulp.watch(paths.styles.src, styles);
-  gulp.watch(paths.images.src, images);
-  gulp.watch('./src/scripts/*.js ', gulp.parallel(scripts))
+// Minificar JS
+export function scripts() {
+  return gulp.src(paths.scripts.src)
+    .pipe(uglify())
+    .pipe(gulp.dest(paths.scripts.dest));
 }
 
-// Exportar tarefas
-exports.styles = styles;
-exports.images = images;
-exports.watch = watch;
-exports.default = gulp.series(
-  gulp.parallel(styles, images, scripts),
-  watch
-);
+// Build (sem watch)
+export const build = gulp.series(gulp.parallel(styles, images, scripts));
+export default build;
