@@ -20,6 +20,10 @@
     .button{
         margin-top: 2vw;
         margin-bottom: 8px;
+
+        @media(max-width: 768px){
+            margin-top: 4vw;
+        }
     }
 
     &__content {
