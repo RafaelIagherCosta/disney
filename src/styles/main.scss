@@ -117,7 +117,7 @@ body {
   border: 1px solid variaveis.$corDeFundoBotaoPrimario;
 
     &:hover{
-        background-color: color.adjust(variaveis.$corDeFundoBotaoSecundario, $lightness: 3%);
+        background-color: color.adjust(variaveis.$corDeFundoBotaoPrimario, $lightness: 3%);
       }
 
     &--secondary{
