@@ -2,6 +2,13 @@ const gulp = require('gulp');
 const dartSass = require('sass');
 const gulpSass = require('gulp-sass')(dartSass);
 const imagemin = require('gulp-imagemin');
+const uglify = require('gulp-uglify');
+
+function scripts(){
+  return gulp.src('./src/scripts/*.s')
+    .pipe(uglify())
+    .pipe(gulp.dest('./dist/js'))
+    }
 
 // Caminhos
 const paths = {
@@ -33,6 +40,7 @@ function images() {
 function watch() {
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.images.src, images);
+  gulp.watch('./src/scripts/*.js ', gulp.parallel(scripts))
 }
 
 // Exportar tarefas
@@ -40,6 +48,6 @@ exports.styles = styles;
 exports.images = images;
 exports.watch = watch;
 exports.default = gulp.series(
-  gulp.parallel(styles, images),
+  gulp.parallel(styles, images, scripts),
   watch
 );
