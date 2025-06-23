@@ -7,15 +7,17 @@
     }
 
     &__list{
-        display: flex;
-        justify-content: space-around;
+        display: grid;
+        gap: 24px;
+        grid-template-columns: repeat(4, 1fr);
         list-style: none;
 
+        @media(max-width:768px){
+            grid-template-columns: 1fr 1fr;
+        }
 
         &__item{
             text-align: center;
-            margin-right: 24px;
-            list-style: none;
 
             h4{
                 margin-top: 20px;
