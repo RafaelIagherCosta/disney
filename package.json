@@ -2,23 +2,23 @@
   "name": "disney",
   "version": "1.0.0",
   "description": "",
+  "type": "module",                         
   "main": "index.js",
   "scripts": {
-    "dev": "gulp --watch",
-    "build": "gulp",
+    "dev": "gulp dev",                    
+    "build": "gulp",                       
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "gulp-sass": "^6.0.1"
+    "gulp-sass": "^6.0.1",
+    "sass": "^1.89.2"
   },
   "devDependencies": {
     "gulp": "^5.0.1",
     "gulp-imagemin": "^9.1.0",
-    "gulp-uglify": "^3.0.2",
-    "pacote": "^21.0.0",
-    "sass": "^1.89.2"
+    "gulp-uglify": "^3.0.2"
   }
 }
