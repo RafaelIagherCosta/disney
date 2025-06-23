@@ -4,13 +4,6 @@ const gulpSass = require('gulp-sass')(dartSass);
 const imagemin = require('gulp-imagemin');
 const uglify = require('gulp-uglify');
 
-function scripts(){
-  return gulp.src('./src/scripts/*.s')
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist/js'))
-    }
-
-// Caminhos
 const paths = {
   styles: {
     src: './src/styles/**/*.scss',
@@ -19,35 +12,44 @@ const paths = {
   images: {
     src: './src/images/**/*.{jpg,jpeg,png,svg,gif}',
     dest: './dist/images'
+  },
+  scripts: {
+    src: './src/scripts/*.js',
+    dest: './dist/js'
   }
 };
 
-// Compilar SCSS e minificar
 function styles() {
   return gulp.src(paths.styles.src)
     .pipe(gulpSass({ outputStyle: 'compressed' }).on('error', gulpSass.logError))
     .pipe(gulp.dest(paths.styles.dest));
 }
 
-// Minificar imagens
 function images() {
   return gulp.src(paths.images.src)
     .pipe(imagemin())
     .pipe(gulp.dest(paths.images.dest));
 }
 
-// Observar alterações
+function scripts() {
+  return gulp.src(paths.scripts.src)
+    .pipe(uglify())
+    .pipe(gulp.dest(paths.scripts.dest));
+}
+
+// Para desenvolvimento local
 function watch() {
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.images.src, images);
-  gulp.watch('./src/scripts/*.js ', gulp.parallel(scripts))
+  gulp.watch(paths.scripts.src, scripts);
 }
 
-// Exportar tarefas
+const build = gulp.series(gulp.parallel(styles, images, scripts));
+
+// Exportações
 exports.styles = styles;
 exports.images = images;
+exports.scripts = scripts;
 exports.watch = watch;
-exports.default = gulp.series(
-  gulp.parallel(styles, images, scripts),
-  watch
-);
+exports.build = build;
+exports.default = build; // <- Isso será usado pela Vercel
